@@ -1,0 +1,9 @@
+archive
+data
+gp
+models
+results
+tests
+
+!./data/dl_outliers.mat
+!./data/2gauss_outliers.mat
