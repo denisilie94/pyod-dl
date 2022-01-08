@@ -13,8 +13,6 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import numpy as np
-
 from _atom import ReplAtoms
 
 
@@ -27,13 +25,13 @@ class Params():
 
     # icoherent parameter
     tau = 0.01
-    
+
     # kdl parameter
     alpha = 1e-6
-    
+
     # rbf kernel parameter
     gamma_rbf = 0.1
-    
+
     # poly kernel parameter
     gamma_poly = 0.1
     coef0_poly = 1

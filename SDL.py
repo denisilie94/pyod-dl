@@ -8,6 +8,7 @@ from omp import omp
 from Params import Params
 from dictionary_learning import selective_dictionary_learning
 
+
 class SDL(BaseDetector):
     def __init__(self, n_components, n_nonzero_coefs, n_iterations,
                  train_proc, train_drop_proc, learning_method,
@@ -18,14 +19,14 @@ class SDL(BaseDetector):
         self.train_proc = train_proc
         self.train_drop_proc = train_drop_proc
         self.contamination = contamination
-        
+
         self.params = Params()
         self.params.train_proc = train_proc
         self.params.train_drop_proc = train_drop_proc
-        
+
         self.learning_method = learning_method
         self.D0 = D0
-        
+
     def fit(self, Y, y=None):
         """Fit detector. y is ignored in unsupervised methods.
         Parameters
@@ -47,21 +48,23 @@ class SDL(BaseDetector):
         self.D0 = np.random.randn(Y.shape[0], self.n_components)
 
         (dictionary, codes,
-         rmse, error_extra) = selective_dictionary_learning(Y,
-                                                            self.D0,
-                                                            self.n_nonzero_coefs,
-                                                            self.n_iterations,
-                                                            omp,
-                                                            self.learning_method,
-                                                            self.params)
-        
+         rmse, error_extra) = selective_dictionary_learning(
+             Y,
+             self.D0,
+             self.n_nonzero_coefs,
+             self.n_iterations,
+             omp,
+             self.learning_method,
+             self.params
+         )
+
         self.D = dictionary
         X, _ = omp(Y, self.D, self.n_nonzero_coefs, self.params)
         err = np.linalg.norm((Y - self.D @ X), axis=0)
         self.decision_scores_ = err
         self._process_decision_scores()
         return self
-    
+
     def decision_function(self, Y):
         """Predict raw anomaly score of X using the fitted detector.
         The anomaly score of an input sample is computed based on different
@@ -83,15 +86,3 @@ class SDL(BaseDetector):
         X, _ = omp(Y, self.D, self.n_nonzero_coefs, self.params)
         err = np.linalg.norm((Y - self.D @ X), axis=0)
         return err
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    

@@ -17,10 +17,10 @@ class DL(BaseDetector):
         self.n_iterations = n_iterations          # number of DL iterations (K)
         self.contamination = contamination
         self.params = Params()
-        
+
         self.learning_method = learning_method
         self.D0 = D0
-        
+
     def fit(self, Y, y=None):
         """Fit detector. y is ignored in unsupervised methods.
         Parameters
@@ -49,14 +49,14 @@ class DL(BaseDetector):
                                                   omp,
                                                   self.learning_method,
                                                   self.params)
-        
+
         self.D = dictionary
         X, _ = omp(Y, self.D, self.n_nonzero_coefs, self.params)
         err = np.linalg.norm((Y - self.D @ X), axis=0)
         self.decision_scores_ = err
         self._process_decision_scores()
         return self
-    
+
     def decision_function(self, Y):
         """Predict raw anomaly score of X using the fitted detector.
         The anomaly score of an input sample is computed based on different

@@ -10,19 +10,11 @@ from __future__ import print_function
 import os
 import sys
 import pickle
-from time import time
-
-# temporary solution for relative imports in case pyod is not installed
-# if pyod is installed, no need to use the following line
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname("__file__"), '..')))
-# supress warnings for clean output
 import warnings
-
-warnings.filterwarnings("ignore")
-
 import numpy as np
 import pandas as pd
+
+from time import time
 from sklearn.model_selection import train_test_split
 from scipy.io import loadmat
 
@@ -52,29 +44,37 @@ from pyod.utils.utility import standardizer
 from pyod.utils.utility import precision_n_scores
 from sklearn.metrics import roc_auc_score
 
+# temporary solution for relative imports in case pyod is not installed
+# if pyod is installed, no need to use the following line
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname("__file__"), '..')))
+
+# supress warnings for clean output
+warnings.filterwarnings("ignore")
+
 # TODO: add neural networks, LOCI, SOS, COF, SOD
 
 # Define data file and read X and y
 mat_file_list = [
-#     '2gauss_outliers.mat',
-#     'dl_outliers.mat',
-#     'arrhythmia.mat',
-#     'cardio.mat',
-#     'glass.mat',
-#     'ionosphere.mat',
-#     'letter.mat',
-#     'lympho.mat',
-#     'mnist.mat',
-#     'musk.mat',
-#     'optdigits.mat',
-#     'pendigits.mat',
-#     'pima.mat',
-#     'satellite.mat',
-#     'satimage-2.mat',
+     '2gauss_outliers.mat',
+     'dl_outliers.mat',
+     'arrhythmia.mat',
+     'cardio.mat',
+     'glass.mat',
+     'ionosphere.mat',
+     'letter.mat',
+     'lympho.mat',
+     'mnist.mat',
+     'musk.mat',
+     'optdigits.mat',
+     'pendigits.mat',
+     'pima.mat',
+     'satellite.mat',
+     'satimage-2.mat',
      'shuttle.mat',
-#     'vertebral.mat',
-#     'vowels.mat',
-#     'wbc.mat'
+     'vertebral.mat',
+     'vowels.mat',
+     'wbc.mat'
 ]
 
 # define the number of iterations
@@ -109,9 +109,10 @@ normalize_data = True
 
 df_columns = [
     'Data', '#Samples', '# Dimensions', 'Outlier Perc',
-    'ABOD', 'CBLOF', 'FB', 'HBOS', 'IForest', 'KNN', 'LOF', 'MCD', 'OCSVM', 'PCA',
+    'ABOD', 'CBLOF', 'FB', 'HBOS', 'IForest',
+    'KNN', 'LOF', 'MCD', 'OCSVM', 'PCA',
     'DL', 'RDL', 'SDL', 'SIDL', 'RSDL',
-    'KDL_S_rbf','KDL_S_poly','KDL_D_rbf', 'KDL_D_poly',
+    'KDL_S_rbf', 'KDL_S_poly', 'KDL_D_rbf', 'KDL_D_poly',
     'SKDL_S_rbf', 'SKDL_S_poly', 'SKDL_D_rbf', 'SKDL_D_poly'
 ]
 
@@ -144,8 +145,9 @@ for j in range(len(mat_file_list)):
 
         if split_data:
             # 60% data for training and 40% for testing
-            X_train, X_test, y_train, y_test = \
-                train_test_split(X, y, test_size=0.4, random_state=random_state)
+            X_train, X_test, y_train, y_test = train_test_split(
+                X, y, test_size=0.4, random_state=random_state
+            )
         else:
             X_train = X
             X_test = X
@@ -381,8 +383,9 @@ for j in range(len(mat_file_list)):
             prn = round(precision_n_scores(y_test, test_scores), ndigits=4)
 
             print('{clf_name} ROC:{roc}, precision @ rank n:{prn}, '
-                  'execution time: {duration}s'.format(
-                clf_name=clf_name, roc=roc, prn=prn, duration=duration))
+                  'execution time: {duration}s'.format(clf_name=clf_name,
+                                                       roc=roc, prn=prn,
+                                                       duration=duration))
 
             time_mat[i, classifiers_indices[clf_name]] = duration
             roc_mat[i, classifiers_indices[clf_name]] = roc

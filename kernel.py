@@ -15,8 +15,10 @@
 
 from sklearn.metrics.pairwise import rbf_kernel, polynomial_kernel
 
+
 def dl_rbf_kernel(X, Y, params):
     return rbf_kernel(X, Y)
+
 
 def dl_poly_kernel(X, Y, params):
     return polynomial_kernel(X, Y)

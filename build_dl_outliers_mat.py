@@ -4,7 +4,7 @@ from scipy.io import savemat
 from sklearn.datasets import make_sparse_coded_signal
 
 # linear syntetic data
-n_features = 6        # signal dimension
+n_features = 64        # signal dimension
 n_components = 50      # number of atoms
 n_nonzero_coefs = 4    # sparsity
 n_samples = 512        # number of signals
@@ -34,7 +34,7 @@ X = np.hstack((Y, Y_bar)).T
 y = np.hstack((np.zeros(n_samples), np.ones(n_outliers)))
 y = y.reshape(len(y), 1)
 
-# savemat('./data/dl_outliers.mat', {'X': X, 'y': y})
+savemat('./data/dl_outliers.mat', {'X': X, 'y': y})
 
 
 # nonlinear syntetic data
