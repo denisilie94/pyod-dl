@@ -1,6 +1,6 @@
 # Anomaly Detection with Selective Dictionary Learning (pyod-dl)
 
-Dictionary Learning methods for outlier detection
+Dictionary Learning methods for outlier detection.
 If you use our work in your research, please cite it as
 ```
 @inproceedings{ilie2022anomaly,
